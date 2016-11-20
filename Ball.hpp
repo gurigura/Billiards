@@ -1,3 +1,4 @@
+/*ボール挙動管理*/
 
 #ifndef Ball_hpp
 #define Ball_hpp
@@ -24,22 +25,22 @@ class Ball : public Vector3d{
     public:
         Ball();
 
-        bool initFlag;
-        GLdouble pos[3];
-        GLdouble speed,pow;
+        bool initFlag;  //初期化フラグ
+        GLdouble pos[3];    //座標[0]=X,[1]=Y,[2]=Z
+        GLdouble speed,pow; //スピードと手球の力
     
-        Vector3d setVec();
+    
     
         /*ボール描画*/
         void    MakeBall(double height, GLfloat color[]);
         /*ボール位置初期化*/
         void    InitPos(int ballNumber);
-    
         /*ボール移動(座標変更)*/
         void    Move();
-    
         /*ボールと壁の反射*/
-        void    RefrectWall();
+        void    RefrectWall(GLdouble *argPos);
+        //ベクトルreturn
+        Vector3d getVec();
 };
 
 #endif /* Ball_hpp */

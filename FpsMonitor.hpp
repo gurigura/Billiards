@@ -1,10 +1,4 @@
-//
-//  FpsMonitor.hpp
-//  OpenGL_Billiards
-//
-//  Created by Gurigura on 2016/11/16.
-//  Copyright © 2016年 Guriguragurarira. All rights reserved.
-//
+/*FPS管理*/
 
 #ifndef FpsMonitor_hpp
 #define FpsMonitor_hpp
@@ -17,14 +11,14 @@ class FpsMonitor{
 private:
     
 public:
-    void    initFps();
-    double  nowFps;
-    double  nowSpf;
-    int     frameCounter;
-    double  nowTime;
-    double  timebase;
-    double  drawStart;
-    double  drawEnd;
+    FpsMonitor();
+    double  nowFps; //現在FPS
+    double  nowSpf; //現在SPF
+//   int     frameCounter;
+    double  nowTime;    //現在時間
+//    double  timebase;   //
+    double  drawStart;  //フレーム時間計測開始時刻
+    double  drawEnd;    //フレーム時間計測開始時刻
     
 };
 

@@ -8,7 +8,7 @@
 #include "Color.hpp"    /*カラーコード*/
 #include "Camera.hpp"   /*カメラ挙動処理*/
 #include "Physics.hpp"  /*物理制御*/
-#include "Vectror3d.hpp"
+#include "Vectror3d.hpp"    /*ベクトルクラス　Ball,Physicsに継承済み*/
 #include "FpsMonitor.hpp"   /*FPS制御*/
 #include "GameControl.hpp"  /*ゲームコントローラー*/
 

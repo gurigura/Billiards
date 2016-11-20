@@ -1,3 +1,5 @@
+/*billiards*/
+
 
 #include "main.hpp"
 
@@ -7,8 +9,7 @@ bool mouseDown; //@@@1変数の受け渡し
 
 void display(void){
     
-    static FpsMonitor fpsMonitor;
-    
+    static FpsMonitor fpsMonitor;   //FPS管理
     
     fpsMonitor.drawStart = glutGet(GLUT_ELAPSED_TIME);
     
@@ -20,10 +21,9 @@ void display(void){
     static PhysicsCalculation physics;
     
     /*光源の位置*/
-    static GLfloat  lightpos[] = {1.0,2.0,3.0,1.0};
+    static GLfloat  lightpos[] = {1.0,1.0,1.0,1.0};
     
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
     glLoadIdentity();
     
     /*光源の位置設定*/
@@ -33,19 +33,17 @@ void display(void){
     glTranslated(cameraPos[0], cameraPos[1], cameraPos[2]);
     glRotated(45.0, 90.0, 0.0, 0.0);
 
-    
     /*描画クラスの反映をここに！！！*/
-    draw.ground(0.1,ballColor.groundColor);
-
-    /*描画ここまで*/
+    draw.ground(0.0,ballColor.groundColor);
     
     /*球初期化位置*/
     if(gameControl.initFlag == true){
         for(int i=0; i<BALL_NUM;i++)    ball[i].InitPos(i);
+        ball[0].z = 1;
         gameControl.initFlag = false;
     }
     
-    /*手球の貯め*/
+    /*手球の威力貯め*/
     if(mouseDown) {
         ball[0].pow-=0.001;
     }else if(ball[0].pow != 0){
@@ -58,17 +56,14 @@ void display(void){
     for(int i=0;i<BALL_NUM;i++){
         glPushMatrix();
         for(int j=0;j<BALL_NUM;j++){
-            if(i==j) break;
-
-            physics.Refrect(ball[i].pos, ball[j].pos,ball[i].setVec(),ball[j].setVec());
-            
-        
+            if(i==j ) break;
+            //反射方向算出
+            physics.Refrect(ball[i].pos, ball[j].pos,ball[i],ball[j]);
         }
-        ball[i].RefrectWall();
-        ball[i].Move();
-   
+        ball[i].Move(); //位置決定
+        ball[i].RefrectWall(ball[i].pos);
         
-        glTranslated(ball[i].pos[0], 0.0, ball[i].pos[2]);
+        glTranslated(ball[i].pos[X], 0.0, ball[i].pos[Z]);
         ball[i].MakeBall(0.5,ballColor.colorCode[i]);
         glPopMatrix();
     }
@@ -77,7 +72,7 @@ void display(void){
     glutPostRedisplay();
     
     fpsMonitor.drawEnd = glutGet(GLUT_ELAPSED_TIME);
-     printf("second per frame %f second \r",(fpsMonitor.drawEnd - fpsMonitor.drawStart)/1000.0);
+   //  printf("second per frame %f second \r",(fpsMonitor.drawEnd - fpsMonitor.drawStart)/1000.0);
     
 }
 
@@ -98,9 +93,8 @@ void resize(int w, int h){
 
 void keyboard(unsigned char key,int x, int y){
     
+    /*カメラ移動*/
     switch (key) {
-        /*カメラ移動*/
-            
         case 'a':
         case 'A':
             glutIdleFunc(LeftMoveCamera);
@@ -140,11 +134,10 @@ void keyboard(unsigned char key,int x, int y){
 void mouse(int button, int state, int x, int y){
     switch(button){
         case GLUT_LEFT_BUTTON:
-            /*マウスをクリックしたウィンドウ上の座標から
-             表示されている台の表面の空間位置を求める*/
             if(state == GLUT_DOWN){
                 mouseDown = true;
                 break;
+                
             case GLUT_MIDDLE_BUTTON:
                 break;
             case GLUT_RIGHT_BUTTON:
@@ -153,22 +146,12 @@ void mouse(int button, int state, int x, int y){
                 break;
             }
             else{
-                /*クリックを話したらフラグファルス*/
+                //クリックを話したらfalse
                 if(mouseDown)mouseDown=false;
             }
-            /*else{
-             glutIdleFunc(0);
-             }*/
     }
     
 }
-
-/*画面再描画*/
-/*
-void Idle(){
-    glutPostRedisplay();
-}
- */
 
 void init(void)
 {

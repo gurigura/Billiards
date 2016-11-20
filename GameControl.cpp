@@ -1,3 +1,4 @@
+/*ゲームコントローラー*/
 
 #include "GameControl.hpp"
 

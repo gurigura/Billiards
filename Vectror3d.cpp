@@ -1,25 +1,30 @@
+/*ベクトルクラス
+ *
+ *注意 * OpneGLUT用にGLdoubleに変更箇所あり
+ */
 
 #include "Vectror3d.hpp"
 
+/*コンストラクタ*/
 Vector3d::Vector3d(){
-    //    pos[0]=pos[1]=pos[2]=0.0;
         x=y=z=0.0;
 }
+/*コンストラクタ　引数:x, y, z*/
 Vector3d::Vector3d(GLdouble arcx,GLdouble arcy, GLdouble arcz){
     x=arcx;
     y=arcy;
     z=arcz;
 }
-
+/*コンストラクタ　引数:*x, *y, *z*/
 Vector3d::Vector3d(GLdouble *arcx,GLdouble *arcy, GLdouble *arcz){
     x=*arcx;
     y=*arcy;
     z=*arcz;
 }
 
+/*ベクトル正規化*/
 void Vector3d::normalize(){
     GLdouble arcNorm;
-    
     arcNorm = sqrt(x*x+ y*y + z*z);
     x = x / fabs(arcNorm);
     y = y / fabs(arcNorm);
@@ -28,7 +33,6 @@ void Vector3d::normalize(){
 
 /*代入演算子*/
 Vector3d& Vector3d::operator=(const Vector3d& v){
-    
     this->x=v.x;
     this->y=v.y;
     this->z=v.z;

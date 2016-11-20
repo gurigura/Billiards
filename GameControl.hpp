@@ -1,10 +1,4 @@
-//
-//  GameControl.hpp
-//  OpenGL_Billiards
-//
-//  Created by Gurigura on 2016/11/16.
-//  Copyright © 2016年 Guriguragurarira. All rights reserved.
-//
+/*ゲームコントローラー*/
 
 #ifndef GameControl_hpp
 #define GameControl_hpp
@@ -15,7 +9,7 @@ class GameControl{
     
 public:
     GameControl();
-    bool initFlag;
+    bool initFlag;  //初期化フラグ
     
 };
 

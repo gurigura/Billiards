@@ -1,6 +1,5 @@
 /*
  * 固定オブジェクト描画クラス
- *
  */
 
 #ifndef draw_hpp
@@ -15,6 +14,7 @@ class DrawObject{
     public:
     DrawObject();
     
+    /*テーブルの描画 引数:高さ,色*/
     void ground(double height,GLfloat* color);
     
 };

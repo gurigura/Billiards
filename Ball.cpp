@@ -1,16 +1,17 @@
+/*ボール挙動管理*/
 
 #include "Ball.hpp"
 
-
 Ball::Ball(){
     initFlag = true;
-    x = 1.0;
-    y = 0;
-    z = 1.0;
-    speed = 0;
+    x = 0.0;
+    y = 0.0;
+    z = 0.0;
+    speed = 0.0;
     pow = 0;
 }
 
+/*ボール描画*/
 void Ball::MakeBall(double height, GLfloat* color){
 //    glPushMatrix();
     glTranslated(0.0, height, 0.0);
@@ -20,6 +21,7 @@ void Ball::MakeBall(double height, GLfloat* color){
     
 }
 
+/*ボール位置初期化*/
 void Ball::InitPos(int ballNumber){
     pos[X] = initPos[ballNumber][X];
     pos[Y] = initPos[ballNumber][Y];
@@ -27,28 +29,39 @@ void Ball::InitPos(int ballNumber){
     initFlag = false;
 }
 
+/*ボール移動(座標変更)*/
 void Ball::Move(){
-    
+    speed *= 0.995;
+    if(speed >= -0.0001)speed = 0;
     pos[X] += x * speed;
- //   pos[Y] += vec[Y] * speed;
+    pos[Y] += y * speed;
     pos[Z] += z * speed;
 
 }
 
-void Ball::RefrectWall(){
-    if(pos[X] > TABLE_WIDTH - BALL_RANGE || pos[X] < -TABLE_WIDTH +BALL_RANGE){
+/*壁反射　引数:GLdouble *pos */
+void Ball::RefrectWall(GLdouble *argPos){
+    
+    if(pos[X] > TABLE_WIDTH - BALL_RANGE){
+        pos[X] -= (pos[X] + BALL_RANGE) - TABLE_WIDTH;    //めり込んだ分戻す
         x *= -1;
-        printf("checkX");
     }
-    if(pos[Z] > TABLE_DEPTH - BALL_RANGE+0.25 || pos[Z] < -TABLE_DEPTH + BALL_RANGE + 0.5){
+    else if(pos[X] < -TABLE_WIDTH +BALL_RANGE){
+        pos[X] -= (pos[X] - BALL_RANGE) + TABLE_WIDTH;    //めり込んだ分戻す
+        x *= -1;
+    }
+    if(pos[Z] > TABLE_DEPTH - BALL_RANGE){
+        pos[Z] -= (pos[Z] + BALL_RANGE) - TABLE_DEPTH;    //めり込んだ分戻す
         z *= -1;
-        printf("check");
-        
+    }
+    else if(pos[Z] < -TABLE_DEPTH +BALL_RANGE ){
+        pos[Z] -= (pos[Z] - BALL_RANGE) + TABLE_DEPTH;    //めり込んだ分戻す
+        z *= -1;
     }
     
 }
 
-Vector3d Ball::setVec(){
+Vector3d Ball::getVec(){
     Vector3d arcVec(x,y,z);
     return arcVec;
 }

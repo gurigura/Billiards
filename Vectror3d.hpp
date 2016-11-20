@@ -1,4 +1,7 @@
-/*注意 * OpneGLUT用にGLdoubleに変更箇所あり*/
+/*ベクトルクラス
+ *
+ *注意 * OpneGLUT用にGLdoubleに変更箇所あり
+ */
 
 #ifndef Vectror3d_hpp
 #define Vectror3d_hpp

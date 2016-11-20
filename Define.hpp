@@ -1,5 +1,4 @@
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -22,4 +21,3 @@
 #define Z 2
 
 //#define TIMESCALE   0.01    /*フレーム間隔*/
-//#define SPEED   30.0    /*パックの初速度*/

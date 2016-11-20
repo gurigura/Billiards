@@ -1,3 +1,4 @@
+/*カメラ管理*/
 
 #include "Camera.hpp"
 
