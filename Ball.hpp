@@ -7,6 +7,7 @@
 
 class Ball : public Vector3d{
     private:
+    
     /*ボール初期位置情報*/
     GLfloat initPos[BALL_NUM][3] = {
         {0,0, TABLE_DEPTH/2}, //0
@@ -27,7 +28,7 @@ class Ball : public Vector3d{
 
         bool initFlag;  //初期化フラグ
         GLdouble pos[3];    //座標[0]=X,[1]=Y,[2]=Z
-        GLdouble speed,pow; //スピードと手球の力
+        GLdouble pow; //ショットの強さ
     
     
     

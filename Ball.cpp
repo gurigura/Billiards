@@ -7,7 +7,6 @@ Ball::Ball(){
     x = 0.0;
     y = 0.0;
     z = 0.0;
-    speed = 0.0;
     pow = 0;
 }
 
@@ -31,12 +30,15 @@ void Ball::InitPos(int ballNumber){
 
 /*ボール移動(座標変更)*/
 void Ball::Move(){
-    speed *= 0.995;
-    if(speed >= -0.0001)speed = 0;
-    pos[X] += x * speed;
-    pos[Y] += y * speed;
-    pos[Z] += z * speed;
-
+    x *= FRICTION_FACTOR;
+//    y *= FRICTION_FACTOR;
+    z *= FRICTION_FACTOR;
+    if(x*x + z*z < (1-FRICTION_FACTOR)/1000){ x=z=0;
+    }else{
+        pos[X] += x;
+        pos[Y] += y;
+        pos[Z] += z;
+    }
 }
 
 /*壁反射　引数:GLdouble *pos */
@@ -44,6 +46,7 @@ void Ball::RefrectWall(GLdouble *argPos){
     
     if(pos[X] > TABLE_WIDTH - BALL_RANGE){
         pos[X] -= (pos[X] + BALL_RANGE) - TABLE_WIDTH;    //めり込んだ分戻す
+        Vector3d test;
         x *= -1;
     }
     else if(pos[X] < -TABLE_WIDTH +BALL_RANGE){

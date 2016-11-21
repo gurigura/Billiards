@@ -23,12 +23,14 @@ Vector3d::Vector3d(GLdouble *arcx,GLdouble *arcy, GLdouble *arcz){
 }
 
 /*ベクトル正規化*/
-void Vector3d::normalize(){
+Vector3d Vector3d::normalize(){
     GLdouble arcNorm;
-    arcNorm = sqrt(x*x+ y*y + z*z);
-    x = x / fabs(arcNorm);
-    y = y / fabs(arcNorm);
-    z = z / fabs(arcNorm);
+    Vector3d argVec;
+    arcNorm = sqrt(x*x + y*y + z*z);
+    argVec.x = x / fabs(arcNorm);
+    argVec.y = y / fabs(arcNorm);
+    argVec.z = z / fabs(arcNorm);
+    return argVec;
 }
 
 /*代入演算子*/

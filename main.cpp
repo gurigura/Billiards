@@ -39,15 +39,15 @@ void display(void){
     /*球初期化位置*/
     if(gameControl.initFlag == true){
         for(int i=0; i<BALL_NUM;i++)    ball[i].InitPos(i);
-        ball[0].z = 1;
         gameControl.initFlag = false;
     }
     
-    /*手球の威力貯め*/
+    /*手球のショット*/
     if(mouseDown) {
         ball[0].pow-=0.001;
     }else if(ball[0].pow != 0){
-        ball[0].speed = ball[0].pow;
+        ball[0].z = ball[0].pow;
+        ball[0].x = ball[0].pow;
         ball[0].pow = 0;
     }
     
@@ -56,7 +56,7 @@ void display(void){
     for(int i=0;i<BALL_NUM;i++){
         glPushMatrix();
         for(int j=0;j<BALL_NUM;j++){
-            if(i==j ) break;
+            if(i<=j ) break;
             //反射方向算出
             physics.Refrect(ball[i].pos, ball[j].pos,ball[i],ball[j]);
         }

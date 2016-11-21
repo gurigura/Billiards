@@ -16,7 +16,7 @@ public:
     Vector3d();
     Vector3d(GLdouble x, GLdouble y, GLdouble z);
     Vector3d(GLdouble *x, GLdouble *y, GLdouble *z);
-    void normalize();   /*正規化*/
+    Vector3d normalize();   /*正規化*/
     
     /*演算子定義系*/
     /*代入演算子*/
