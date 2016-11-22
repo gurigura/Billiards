@@ -17,6 +17,8 @@ public:
     Vector3d(GLdouble x, GLdouble y, GLdouble z);
     Vector3d(GLdouble *x, GLdouble *y, GLdouble *z);
     Vector3d normalize();   /*正規化*/
+    double length();
+    double length(Vector3d);    /*長さ*/
     
     /*演算子定義系*/
     /*代入演算子*/
@@ -39,4 +41,5 @@ float   operator*(const Vector3d& u,const Vector3d& v);
 Vector3d operator*(const Vector3d& v,float k);
 Vector3d operator*(float k, const Vector3d& v);
 Vector3d operator/(const Vector3d& v,float k);
+
 #endif /* Vectror3d_hpp */

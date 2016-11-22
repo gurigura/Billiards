@@ -26,12 +26,27 @@ Vector3d::Vector3d(GLdouble *arcx,GLdouble *arcy, GLdouble *arcz){
 Vector3d Vector3d::normalize(){
     GLdouble arcNorm;
     Vector3d argVec;
-    arcNorm = sqrt(x*x + y*y + z*z);
-    argVec.x = x / fabs(arcNorm);
-    argVec.y = y / fabs(arcNorm);
-    argVec.z = z / fabs(arcNorm);
+    arcNorm = sqrt(this->length());
+    if(arcNorm == 0){
+        argVec.x = 0;
+        argVec.y = 0;
+        argVec.z = 0;
+    }else{
+        argVec.x = x / fabs(arcNorm);
+        argVec.y = y / fabs(arcNorm);
+        argVec.z = z / fabs(arcNorm);
+    }
     return argVec;
 }
+
+double Vector3d::length(){
+    return  x*x + y*y + z*z;
+}
+
+double Vector3d::length(Vector3d argVec){
+    return  argVec.x*argVec.x + argVec.y*argVec.y + argVec.z*argVec.z;
+}
+
 
 /*代入演算子*/
 Vector3d& Vector3d::operator=(const Vector3d& v){
@@ -68,7 +83,7 @@ Vector3d& Vector3d::operator*=(float f){
 
 /* /= */
 Vector3d& Vector3d::operator/=(float f){
-    //分母0　除算
+    //分母0　除算   **********************************
     if(f==0){
         std::cout << "warning!!" << std::endl;
         exit(0);
@@ -128,7 +143,4 @@ Vector3d operator/(const Vector3d& v,float k){
     w.y = v.y / k;
     return w;
 }
-
-
-
 

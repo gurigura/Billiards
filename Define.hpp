@@ -12,8 +12,11 @@
 #define TABLE_HEIGHT 0.5 /*壁の高さ */
 #define BALL_RANGE 0.057    /*ボールの半径*/
 #define BALL_NUM 10 /*ボールの数 + 1*/
-#define FRICTION_FACTOR 0.99      /*台との摩擦係数(1-(10^-2))*/
-#define WEIGHT 0.175  /*球の質量*/
+#define BALL_WEIGHT 0.175  /*球の質量*/
+#define FRICTION_GROUND 0.990      /*台との摩擦係数(1-(10^-2))*/
+#define FRICTION_WALL 0.990      /*壁との摩擦係数(1-(10^-2))*/
+#define FRICTION_BALL 0.999      /*球との摩擦係数(1-(10^-3))*/
+
 #define PI 3.141592
 
 /*座標系配列番号*/

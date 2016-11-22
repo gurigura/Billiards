@@ -44,10 +44,11 @@ void display(void){
     
     /*手球のショット*/
     if(mouseDown) {
-        ball[0].pow-=0.001;
+        ball[0].pow-=0.005;
+        if(ball[0].pow <= -0.5)ball[0].pow = -0.5;//上限
     }else if(ball[0].pow != 0){
-        ball[0].z = ball[0].pow;
-        ball[0].x = ball[0].pow;
+        ball[0].vec.z = ball[0].pow;
+        ball[0].vec.x = ball[0].pow;
         ball[0].pow = 0;
     }
     
@@ -58,7 +59,7 @@ void display(void){
         for(int j=0;j<BALL_NUM;j++){
             if(i<=j ) break;
             //反射方向算出
-            physics.Refrect(ball[i].pos, ball[j].pos,ball[i],ball[j]);
+            physics.Refrect(ball[i].pos, ball[j].pos,ball[i].vec,ball[j].vec);
         }
         ball[i].Move(); //位置決定
         ball[i].RefrectWall(ball[i].pos);

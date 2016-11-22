@@ -5,9 +5,8 @@
 
 #include "Define.hpp"
 
-class Ball : public Vector3d{
+class Ball{
     private:
-    
     /*ボール初期位置情報*/
     GLfloat initPos[BALL_NUM][3] = {
         {0,0, TABLE_DEPTH/2}, //0
@@ -25,7 +24,9 @@ class Ball : public Vector3d{
     
     public:
         Ball();
-
+    
+        Vector3d vec;
+    
         bool initFlag;  //初期化フラグ
         GLdouble pos[3];    //座標[0]=X,[1]=Y,[2]=Z
         GLdouble pow; //ショットの強さ

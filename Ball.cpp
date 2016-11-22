@@ -4,9 +4,9 @@
 
 Ball::Ball(){
     initFlag = true;
-    x = 0.0;
-    y = 0.0;
-    z = 0.0;
+    vec.x = 0.0;
+    vec.y = 0.0;
+    vec.z = 0.0;
     pow = 0;
 }
 
@@ -30,14 +30,17 @@ void Ball::InitPos(int ballNumber){
 
 /*ボール移動(座標変更)*/
 void Ball::Move(){
-    x *= FRICTION_FACTOR;
-//    y *= FRICTION_FACTOR;
-    z *= FRICTION_FACTOR;
-    if(x*x + z*z < (1-FRICTION_FACTOR)/1000){ x=z=0;
-    }else{
-        pos[X] += x;
-        pos[Y] += y;
-        pos[Z] += z;
+    vec *= FRICTION_GROUND;//摩擦抵抗
+    /*一定速度以下で停止*/
+    if(vec.x*vec.x + vec.z*vec.z < (1-FRICTION_GROUND)/1000)
+    {
+        vec.x=vec.z=0;
+    }
+    else
+    {
+        pos[X] += vec.x*BALL_WEIGHT;
+        pos[Y] += vec.y*BALL_WEIGHT;
+        pos[Z] += vec.z*BALL_WEIGHT;
     }
 }
 
@@ -46,26 +49,25 @@ void Ball::RefrectWall(GLdouble *argPos){
     
     if(pos[X] > TABLE_WIDTH - BALL_RANGE){
         pos[X] -= (pos[X] + BALL_RANGE) - TABLE_WIDTH;    //めり込んだ分戻す
-        Vector3d test;
-        x *= -1;
+        vec.x *= -1;
     }
     else if(pos[X] < -TABLE_WIDTH +BALL_RANGE){
-        pos[X] -= (pos[X] - BALL_RANGE) + TABLE_WIDTH;    //めり込んだ分戻す
-        x *= -1;
+        pos[X] -= (pos[X] - BALL_RANGE) + TABLE_WIDTH;
+        vec.x *= -1;
     }
     if(pos[Z] > TABLE_DEPTH - BALL_RANGE){
-        pos[Z] -= (pos[Z] + BALL_RANGE) - TABLE_DEPTH;    //めり込んだ分戻す
-        z *= -1;
+        pos[Z] -= (pos[Z] + BALL_RANGE) - TABLE_DEPTH;
+        vec.z *= -1;
     }
     else if(pos[Z] < -TABLE_DEPTH +BALL_RANGE ){
-        pos[Z] -= (pos[Z] - BALL_RANGE) + TABLE_DEPTH;    //めり込んだ分戻す
-        z *= -1;
+        pos[Z] -= (pos[Z] - BALL_RANGE) + TABLE_DEPTH;
+        vec.z *= -1;
     }
     
 }
 
 Vector3d Ball::getVec(){
-    Vector3d arcVec(x,y,z);
+    Vector3d arcVec(vec.x,vec.y,vec.z);
     return arcVec;
 }
 
