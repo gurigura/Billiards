@@ -68,8 +68,8 @@ void PhysicsCalculation::Refrect(GLdouble *argPos1, GLdouble *argPos2,  Vector3d
         
         argVec1 = argVec1.normalize()*0.05;
         argVec2 = argVec2.normalize()*0.05;
-        printf("------- %lf,%lf ------\n",argVec1.x,argVec1.z);
-        printf("------- %lf,%lf ------\n",argVec2.x,argVec2.z);
+        printf("vecX,VecZ %lf,%lf \n",argVec1.x,argVec1.z);
+   //     printf("------- %lf,%lf ------\n",argVec2.x,argVec2.z);
         
         
         
