@@ -17,7 +17,7 @@ public:
     bool DistanceXZ(GLdouble *argPos1, GLdouble *argPos2);
     
     /*反射方向 引数:*一つ目の球座標, *二つ目の球座標, 一つ目の球ベクトル, 二つ目の球ベクトル */
-    void Refrect(GLdouble *argPos1, GLdouble *argPos2,  Vector3d &argVec1, Vector3d &argVec2);
+    void Refrect(GLdouble *argPos1, GLdouble *argPos2,  Vector3d &speed1, Vector3d &speed2);
     
 
     

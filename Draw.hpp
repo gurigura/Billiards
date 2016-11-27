@@ -9,8 +9,6 @@
 #include "Define.hpp"
 
 class DrawObject{
-    private:
-    
     public:
     DrawObject();
     

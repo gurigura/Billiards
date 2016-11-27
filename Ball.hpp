@@ -6,32 +6,13 @@
 #include "Define.hpp"
 
 class Ball{
-    private:
-    /*ボール初期位置情報*/
-    GLfloat initPos[BALL_NUM][3] = {
-        {0,0, TABLE_DEPTH/2}, //0
-        {0,0, -TABLE_DEPTH/2}, //1
-        {-BALL_RANGE,0, -TABLE_DEPTH/2 + BALL_RANGE*2},  //2
-        { BALL_RANGE,0, -TABLE_DEPTH/2 + BALL_RANGE*2},    //3
-        {-BALL_RANGE*2,0, -TABLE_DEPTH/2 + BALL_RANGE*4},  //4
-        { BALL_RANGE*2,0, -TABLE_DEPTH/2 + BALL_RANGE*4},  //5
-        {-BALL_RANGE,0, -TABLE_DEPTH/2 + BALL_RANGE*6},  //6
-        { BALL_RANGE,0, -TABLE_DEPTH/2 + BALL_RANGE*6},   //7
-        {0,0, -TABLE_DEPTH/2 + BALL_RANGE*8},   //8
-        {0,0, -TABLE_DEPTH/2 + BALL_RANGE*4}   //9
-    };
-    
-    
     public:
         Ball();
     
-        Vector3d vec;
-    
+        Vector3d speed;
         bool initFlag;  //初期化フラグ
         GLdouble pos[3];    //座標[0]=X,[1]=Y,[2]=Z
         GLdouble pow; //ショットの強さ
-    
-    
     
         /*ボール描画*/
         void    MakeBall(double height, GLfloat color[]);
@@ -43,6 +24,22 @@ class Ball{
         void    RefrectWall(GLdouble *argPos);
         //ベクトルreturn
         Vector3d getVec();
+    
+    private:
+        /*ボール初期位置情報*/
+        GLfloat initPos[BALL_NUM][3] = {
+            {0,0, TABLE_DEPTH/2}, //0
+            {0,0, -TABLE_DEPTH/2}, //1
+            {-BALL_RANGE,0, -TABLE_DEPTH/2 + BALL_RANGE*2},  //2
+            { BALL_RANGE,0, -TABLE_DEPTH/2 + BALL_RANGE*2},    //3
+            {-BALL_RANGE*2,0, -TABLE_DEPTH/2 + BALL_RANGE*4},  //4
+            { BALL_RANGE*2,0, -TABLE_DEPTH/2 + BALL_RANGE*4},  //5
+            {-BALL_RANGE,0, -TABLE_DEPTH/2 + BALL_RANGE*6},  //6
+            { BALL_RANGE,0, -TABLE_DEPTH/2 + BALL_RANGE*6},   //7
+            {0,0, -TABLE_DEPTH/2 + BALL_RANGE*8},   //8
+            {0,0, -TABLE_DEPTH/2 + BALL_RANGE*4}   //9
+        };
+    
 };
 
 #endif /* Ball_hpp */
