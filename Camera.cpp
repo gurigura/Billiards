@@ -12,7 +12,6 @@ void CameraInit(){
 /*カメラ移動　右*/
 void RightMoveCamera(){
     cameraPos[0] += 0.1;
-    
 }
 
 /*カメラ移動　左*/

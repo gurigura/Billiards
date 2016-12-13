@@ -47,7 +47,11 @@ double Vector3d::length(Vector3d argVec){
     return  argVec.x*argVec.x + argVec.y*argVec.y + argVec.z*argVec.z;
 }
 
-
+/*内積*/
+double dot(Vector3d argVec1,Vector3d argVec2){
+    double argDot = argVec1.x*argVec2.x + argVec1.y*argVec2.y + argVec1.z*argVec2.z;
+    return argDot;
+}
 /*代入演算子*/
 Vector3d& Vector3d::operator=(const Vector3d& v){
     this->x=v.x;
@@ -109,12 +113,14 @@ Vector3d operator+(const Vector3d& u,const Vector3d& v){
     Vector3d w;
     w.x = u.x + v.x;
     w.y = u.y + v.y;
+    w.z = u.z + v.z;
     return w;
 }
 Vector3d operator-(const Vector3d& u,const Vector3d& v){
     Vector3d w;
     w.x = u.x - v.x;
     w.y = u.y - v.y;
+    w.z = u.z - v.z;
     return w;
 }
 
@@ -127,6 +133,7 @@ Vector3d operator*(const Vector3d& v,float k){
     Vector3d w;
     w.x = v.x * k;
     w.y = v.y * k;
+    w.z = v.z * k;
     return w;
 }
 
@@ -134,6 +141,7 @@ Vector3d operator*(float k, const Vector3d& v){
     Vector3d w;
     w.x = v.x * k;
     w.y = v.y * k;
+    w.z = v.z * k;
     return w;
 }
 
@@ -141,6 +149,7 @@ Vector3d operator/(const Vector3d& v,float k){
     Vector3d w;
     w.x = v.x / k;
     w.y = v.y / k;
+    w.z = v.z / k;
     return w;
 }
 

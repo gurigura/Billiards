@@ -1,5 +1,4 @@
 /*ベクトルクラス
- *
  *注意 * OpneGLUT用にGLdoubleに変更箇所あり
  */
 
@@ -17,6 +16,8 @@ public:
     Vector3d(GLdouble x, GLdouble y, GLdouble z);
     Vector3d(GLdouble *x, GLdouble *y, GLdouble *z);
     Vector3d normalize();   /*正規化*/
+    
+    double dot(Vector3d argVec1,Vector3d argVec2);  /*内積*/
     double length();
     double length(Vector3d);    /*長さ*/
     

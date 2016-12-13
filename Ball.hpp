@@ -11,7 +11,7 @@ class Ball{
     
         Vector3d speed;
         bool initFlag;  //初期化フラグ
-        GLdouble pos[3];    //座標[0]=X,[1]=Y,[2]=Z
+        Vector3d pos;    //座標
         GLdouble pow; //ショットの強さ
     
         /*ボール描画*/
@@ -21,25 +21,13 @@ class Ball{
         /*ボール移動(座標変更)*/
         void    Move();
         /*ボールと壁の反射*/
-        void    RefrectWall(GLdouble *argPos);
+        void    RefrectWall(Vector3d &argPos);
         //ベクトルreturn
         Vector3d getVec();
     
     private:
         /*ボール初期位置情報*/
-        GLfloat initPos[BALL_NUM][3] = {
-            {0,0, TABLE_DEPTH/2}, //0
-            {0,0, -TABLE_DEPTH/2}, //1
-            {-BALL_RANGE,0, -TABLE_DEPTH/2 + BALL_RANGE*2},  //2
-            { BALL_RANGE,0, -TABLE_DEPTH/2 + BALL_RANGE*2},    //3
-            {-BALL_RANGE*2,0, -TABLE_DEPTH/2 + BALL_RANGE*4},  //4
-            { BALL_RANGE*2,0, -TABLE_DEPTH/2 + BALL_RANGE*4},  //5
-            {-BALL_RANGE,0, -TABLE_DEPTH/2 + BALL_RANGE*6},  //6
-            { BALL_RANGE,0, -TABLE_DEPTH/2 + BALL_RANGE*6},   //7
-            {0,0, -TABLE_DEPTH/2 + BALL_RANGE*8},   //8
-            {0,0, -TABLE_DEPTH/2 + BALL_RANGE*4}   //9
-        };
-    
+        GLfloat initPos[BALL_NUM][3];
 };
 
 #endif /* Ball_hpp */

@@ -19,10 +19,10 @@ void DrawObject::ground(double height,GLfloat* color){
   //  glNormal3b(0.0,1.0,0.0);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
   //  glColor3f(0.0,1.0,0.0);
-    glVertex3d(-TABLE_WIDTH,height,-TABLE_DEPTH-0.6);
-    glVertex3d(-TABLE_WIDTH,height,TABLE_DEPTH-0.6);
-    glVertex3d(TABLE_WIDTH,height,TABLE_DEPTH-0.6);
-    glVertex3d(TABLE_WIDTH,height,-TABLE_DEPTH-0.6);
+    glVertex3d(-TABLE_WIDTH-0.1,height,-TABLE_DEPTH-0.8);
+    glVertex3d(-TABLE_WIDTH-0.1,height, TABLE_DEPTH-0.3);
+    glVertex3d( TABLE_WIDTH+0.1,height, TABLE_DEPTH-0.3);
+    glVertex3d( TABLE_WIDTH+0.1,height,-TABLE_DEPTH-0.8);
     
   glEnd();
 }

@@ -10,6 +10,8 @@ class GameControl{
 public:
     GameControl();
     bool initFlag;  //初期化フラグ
+    bool mouseDown; //クリックフラグ
+    int mousePos[2]; //マウス位置
     
 };
 

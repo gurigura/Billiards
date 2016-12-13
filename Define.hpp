@@ -4,7 +4,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include <GLUT/glut.h>
 
 #include "Vectror3d.hpp"
@@ -21,6 +20,7 @@ const static float FRICTION_WALL = 0.990;      /*壁との摩擦係数(1-(10^-2)
 const static float FRICTION_BALL = 0.999;      /*球との摩擦係数(1-(10^-3))*/
 
 const static float PI = 3.141592;
+const static float root3 = 1.73205080757;   /*初期位置の縦の距離の割合*/
 
 /*座標系配列番号*/
 const static int X = 0;

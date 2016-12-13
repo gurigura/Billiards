@@ -7,9 +7,7 @@
 #include "define.hpp"
 
 class FpsMonitor{
-    
-private:
-    
+
 public:
     FpsMonitor();
     double  nowFps; //現在FPS

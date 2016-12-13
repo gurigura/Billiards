@@ -3,6 +3,8 @@
 #include "main.hpp"
 
 bool mouseDown; //@@@1変数の受け渡し
+bool initStatus;//
+int debugNum;   //デバック処理
 
 void display(void){
     
@@ -15,6 +17,7 @@ void display(void){
     static GameControl gameControl;
     static BallColor ballColor;
     static Ball ball[10];
+    static Pocket pocket[6];
     static PhysicsCalculation physics;
     
     /*光源の位置*/
@@ -33,35 +36,54 @@ void display(void){
     /*描画クラスの反映をここに！！！*/
     draw.ground(0.0,ballColor.groundColor);
     
+    for(int i=0;i<6;i++) pocket[i].MakePocket(0.5);
+    
     /*球初期化位置*/
     if(gameControl.initFlag == true){
         for(int i=0; i<BALL_NUM;i++)    ball[i].InitPos(i);
+        for(int i=0;i<6;i++){
+            pocket[i].InitPos(i);
+            pocket[i].MakePocket(0.5);
+        }
         gameControl.initFlag = false;
     }
     
     /*手球のショット*/
+    if(mouseDown){
+        
+    }
+    
+    /*
     if(mouseDown) {
-        ball[0].pow-=0.005;
+        ball[0].pow-=0.001;
         if(ball[0].pow <= -0.5)ball[0].pow = -0.5;//上限
     }else if(ball[0].pow != 0){
         ball[0].speed.z = ball[0].pow;
-        ball[0].speed.x = ball[0].pow;
+        ball[0].speed.x = ball[0].pow/10;
         ball[0].pow = 0;
     }
+     */
     
     
     /*球移動処理*/
+    glPushMatrix();
+    if(debugNum == 1)ball[0].pos.z -= 0.01;
+    if(debugNum == 2)ball[0].pos.z += 0.01;
+    if(debugNum == 3)ball[0].pos.x -= 0.01;
+    if(debugNum == 4)ball[0].pos.x += 0.01;
+    glPopMatrix();
+
     for(int i=0;i<BALL_NUM;i++){
         glPushMatrix();
         for(int j=0;j<BALL_NUM;j++){
-            if(i<=j ) break;
+            if(i==j ) break;
             //反射方向算出
-            physics.Refrect(ball[i].pos, ball[j].pos,ball[i].speed,ball[j].speed);
+            physics.Refrect(ball[i].pos, ball[j].pos,ball[i].speed,ball[j].speed,BALL_WEIGHT,BALL_WEIGHT);
         }
         ball[i].Move(); //位置決定
         ball[i].RefrectWall(ball[i].pos);
         
-        glTranslated(ball[i].pos[X], 0.0, ball[i].pos[Z]);
+        glTranslated(ball[i].pos.x, 0.0, ball[i].pos.z);
         ball[i].MakeBall(0.5,ballColor.colorCode[i]);
         glPopMatrix();
     }
@@ -117,6 +139,9 @@ void keyboard(unsigned char key,int x, int y){
      //       glutPostRedisplay();
             break;
             
+        case '_':
+            debugNum = 0;
+            break;
     
         /*終了処理*/
         case '\033':
@@ -129,24 +154,41 @@ void keyboard(unsigned char key,int x, int y){
     }
 }
 
+
+void specialKey(int key,int x, int y){
+    /*カメラ移動*/
+    switch (key) {
+        case GLUT_KEY_UP:
+            debugNum = 1;
+            break;
+        case GLUT_KEY_DOWN:
+            debugNum = 2;
+            break;
+        case GLUT_KEY_LEFT:
+            debugNum = 3;
+            break;
+        case GLUT_KEY_RIGHT:
+            debugNum = 4;
+            break;
+        default:
+            debugNum = 0;
+            break;
+    }
+}
+
 void mouse(int button, int state, int x, int y){
     switch(button){
         case GLUT_LEFT_BUTTON:
             if(state == GLUT_DOWN){
                 mouseDown = true;
                 break;
-                
-            case GLUT_MIDDLE_BUTTON:
-                break;
-            case GLUT_RIGHT_BUTTON:
-                break;
-            default:
-                break;
             }
             else{
                 //クリックを話したらfalse
                 if(mouseDown)mouseDown=false;
             }
+        default:
+            break;
     }
     
 }
@@ -154,6 +196,8 @@ void mouse(int button, int state, int x, int y){
 void init(void)
 {
     /*初期設定*/
+    debugNum=0;
+    initStatus = true;
     mouseDown = false;
     glClearColor(1.0,1.0,1.0,1.0);
     glEnable(GL_DEPTH_TEST);
@@ -172,6 +216,8 @@ int main(int argc, char *argv[]){
     glutDisplayFunc(display);
     glutReshapeFunc(resize);
     glutKeyboardFunc(keyboard);
+    glutSpecialFunc(specialKey);
+    
     glutMouseFunc(mouse);
 //    glutIdleFunc(Idle);
     init();
