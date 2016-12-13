@@ -5,6 +5,12 @@
 bool mouseDown; //@@@1変数の受け渡し
 bool initStatus;//
 int debugNum;   //デバック処理
+float argNum[2];   //関数間数値受け渡し用
+
+void SetNum(float argOne,float argTwo){
+    argNum[0] = argOne;
+    argNum[1] = argTwo;
+}
 
 void display(void){
     
@@ -49,8 +55,21 @@ void display(void){
     }
     
     /*手球のショット*/
-    if(mouseDown){
+    if(mouseDown && !gameControl.mouseDown){
+        gameControl.mousePos[X] = argNum[0];
+        gameControl.mousePos[Y] = argNum[1];
         
+        gameControl.mouseDown = true;
+    }
+    if(!mouseDown && gameControl.mouseDown){
+        ball[0].speed.x = (float)((gameControl.mousePos[X] - argNum[0])/1000);
+        ball[0].speed.z = (float)((gameControl.mousePos[Y] - argNum[1])/1000);
+        
+        cout << ball[0].speed.x << endl;
+        cout << ball[0].speed.z << endl;
+
+        
+        gameControl.mouseDown = false;
     }
     
     /*
@@ -59,10 +78,10 @@ void display(void){
         if(ball[0].pow <= -0.5)ball[0].pow = -0.5;//上限
     }else if(ball[0].pow != 0){
         ball[0].speed.z = ball[0].pow;
-        ball[0].speed.x = ball[0].pow/10;
+  //      ball[0].speed.x = ball[0].pow/10;
         ball[0].pow = 0;
     }
-     */
+    */
     
     
     /*球移動処理*/
@@ -75,8 +94,11 @@ void display(void){
 
     for(int i=0;i<BALL_NUM;i++){
         glPushMatrix();
+        if(ball[i].life == false)continue;
         for(int j=0;j<BALL_NUM;j++){
             if(i==j ) break;
+            if(ball[j].life == false) break;
+            
             //反射方向算出
             physics.Refrect(ball[i].pos, ball[j].pos,ball[i].speed,ball[j].speed,BALL_WEIGHT,BALL_WEIGHT);
         }
@@ -84,7 +106,18 @@ void display(void){
         ball[i].RefrectWall(ball[i].pos);
         
         glTranslated(ball[i].pos.x, 0.0, ball[i].pos.z);
+        
         ball[i].MakeBall(0.5,ballColor.colorCode[i]);
+        
+        //ポッケに入っているかチェック
+        if(ball[i].pos.x < -TABLE_WIDTH+BALL_RANGE*2 || ball[i].pos.x > TABLE_WIDTH-BALL_RANGE*2){
+            if(ball[i].pos.z <-TABLE_DEPTH+BALL_RANGE*2 || ball[i].pos.z >TABLE_DEPTH-BALL_RANGE*2 || ball[i].pos.z < BALL_RANGE && ball[i].pos.z > -BALL_RANGE){
+                
+                ball[i].speed.x = ball[i].speed.z = 0.0;
+                ball[i].pos.x = ball[i].pos.z = 90.0;
+                ball[i].life = false;
+            }
+        }
         glPopMatrix();
     }
     
@@ -180,12 +213,17 @@ void mouse(int button, int state, int x, int y){
     switch(button){
         case GLUT_LEFT_BUTTON:
             if(state == GLUT_DOWN){
+                if(!mouseDown)  SetNum(x,y);    //マウス座標保存
                 mouseDown = true;
+                
                 break;
             }
             else{
                 //クリックを話したらfalse
-                if(mouseDown)mouseDown=false;
+                if(mouseDown){
+                    SetNum(x,y);    //マウス座標保存
+                    mouseDown=false;
+                }
             }
         default:
             break;

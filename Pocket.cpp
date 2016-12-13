@@ -31,7 +31,7 @@ void Pocket::MakePocket(double height){
     glPushMatrix();
     glTranslated(pos.x, height, pos.z);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
-    glutSolidSphere(BALL_RANGE, 16, 16);
+    glutSolidSphere(BALL_RANGE*1.5, 16, 16);
     glPopMatrix();
     
 }

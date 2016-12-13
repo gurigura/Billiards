@@ -11,6 +11,7 @@ class Ball{
     
         Vector3d speed;
         bool initFlag;  //初期化フラグ
+        bool life;
         Vector3d pos;    //座標
         GLdouble pow; //ショットの強さ
     

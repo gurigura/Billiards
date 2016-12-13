@@ -4,6 +4,7 @@
 
 Ball::Ball(){
     initFlag = true;
+    life = true;
     speed.x = 0.0;
     speed.y = 0.0;
     speed.z = 0.0;
