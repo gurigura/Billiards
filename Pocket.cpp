@@ -5,12 +5,12 @@
 
 Pocket::Pocket(){
     GLfloat initPosSet[6][3] = {
-        {-TABLE_WIDTH, 0, -TABLE_DEPTH}, //1
-        { TABLE_WIDTH, 0, -TABLE_DEPTH}, //2
-        {-TABLE_WIDTH, 0, 0},  //3
-        { TABLE_WIDTH, 0, 0},  //4
-        {-TABLE_WIDTH, 0, TABLE_DEPTH}, //5
-        { TABLE_WIDTH, 0, TABLE_DEPTH}, //6
+        {-TABLE_WIDTH+0.01f, 0, -TABLE_DEPTH+0.01f}, //1
+        { TABLE_WIDTH-0.01f, 0, -TABLE_DEPTH+0.01f}, //2
+        {-TABLE_WIDTH+0.01f, 0, 0},  //3
+        { TABLE_WIDTH-0.01f, 0, 0},  //4
+        {-TABLE_WIDTH+0.01f, 0, TABLE_DEPTH-0.01f}, //5
+        { TABLE_WIDTH-0.01f, 0, TABLE_DEPTH-0.01f}, //6
         };
     
     for(int i=0;i<BALL_NUM;i++){
@@ -19,10 +19,10 @@ Pocket::Pocket(){
         }
     }
     
-    color [0] = 0.9;
-    color [1] = 0.9;
-    color [2] = 0.9;
-    color [3] = 0.9;
+    color [0] = 0.0;
+    color [1] = 0.0;
+    color [2] = 0.0;
+    color [3] = 0.0;
     
 }
 

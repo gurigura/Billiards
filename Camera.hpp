@@ -6,7 +6,8 @@
 #include "Define.hpp"
 
 /*カメラ位置変数*/
-static GLfloat cameraPos[3] = {0.0,0.0,-5.0};   //X,Y,Z
+static Vector3d cameraPos; //カメラ位置
+
 
 /*カメラ初期位置*/
 void CameraInit();

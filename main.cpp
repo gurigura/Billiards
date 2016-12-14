@@ -3,7 +3,7 @@
 #include "main.hpp"
 
 bool mouseDown; //@@@1変数の受け渡し
-bool initStatus;//
+int initStatus; //球初期化用 1.全初期化,2.手球初期化
 int debugNum;   //デバック処理
 float argNum[2];   //関数間数値受け渡し用
 
@@ -27,7 +27,7 @@ void display(void){
     static PhysicsCalculation physics;
     
     /*光源の位置*/
-    static GLfloat  lightpos[] = {1.0,1.0,1.0,1.0};
+    static GLfloat  lightpos[] = {0.4,1.0,1.0,0.6};
     
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
@@ -36,26 +36,37 @@ void display(void){
     glLightfv(GL_LIGHT0,GL_POSITION, lightpos);
     
     /*カメラの位置*/
-    glTranslated(cameraPos[0], cameraPos[1], cameraPos[2]);
+    glTranslated(cameraPos.x, cameraPos.y, -5.0);
     glRotated(45.0, 90.0, 0.0, 0.0);
 
-    /*描画クラスの反映をここに！！！*/
-    draw.ground(0.0,ballColor.groundColor);
+    /*台の描画*/
+    draw.ground(-0.0, ballColor.groundColor);
     
+    /*ポケットの描画*/
     for(int i=0;i<6;i++) pocket[i].MakePocket(0.5);
     
     /*球初期化位置*/
-    if(gameControl.initFlag == true){
-        for(int i=0; i<BALL_NUM;i++)    ball[i].InitPos(i);
+    if(initStatus == true){
+        for(int i=0; i<BALL_NUM;i++){
+            ball[i].InitPos(i);
+            ball[i].life = true;
+        }
         for(int i=0;i<6;i++){
             pocket[i].InitPos(i);
             pocket[i].MakePocket(0.5);
         }
+        initStatus = false;
         gameControl.initFlag = false;
+    }
+    //手球だけ初期化
+    if(initStatus == 2){
+        ball[0].InitPos(0);
+        ball[0].life = true;
+        initStatus = false;
     }
     
     /*手球のショット*/
-    if(mouseDown && !gameControl.mouseDown){
+    if(mouseDown && !gameControl.mouseDown && ball[0].speed.x == 0 && ball[0].speed.z == 0){
         gameControl.mousePos[X] = argNum[0];
         gameControl.mousePos[Y] = argNum[1];
         
@@ -72,18 +83,6 @@ void display(void){
         gameControl.mouseDown = false;
     }
     
-    /*
-    if(mouseDown) {
-        ball[0].pow-=0.001;
-        if(ball[0].pow <= -0.5)ball[0].pow = -0.5;//上限
-    }else if(ball[0].pow != 0){
-        ball[0].speed.z = ball[0].pow;
-  //      ball[0].speed.x = ball[0].pow/10;
-        ball[0].pow = 0;
-    }
-    */
-    
-    
     /*球移動処理*/
     glPushMatrix();
     if(debugNum == 1)ball[0].pos.z -= 0.01;
@@ -94,19 +93,19 @@ void display(void){
 
     for(int i=0;i<BALL_NUM;i++){
         glPushMatrix();
-        if(ball[i].life == false)continue;
+        if(ball[i].life == false) continue;
         for(int j=0;j<BALL_NUM;j++){
             if(i==j ) break;
-            if(ball[j].life == false) break;
+         //   if(ball[j].life == false) break;
             
             //反射方向算出
             physics.Refrect(ball[i].pos, ball[j].pos,ball[i].speed,ball[j].speed,BALL_WEIGHT,BALL_WEIGHT);
         }
+        
         ball[i].Move(); //位置決定
         ball[i].RefrectWall(ball[i].pos);
-        
         glTranslated(ball[i].pos.x, 0.0, ball[i].pos.z);
-        
+        glRotated(10.0, 0.0, 0.0, 0.0);
         ball[i].MakeBall(0.5,ballColor.colorCode[i]);
         
         //ポッケに入っているかチェック
@@ -150,26 +149,38 @@ void keyboard(unsigned char key,int x, int y){
     switch (key) {
         case 'a':
         case 'A':
-            glutIdleFunc(LeftMoveCamera);
+            LeftMoveCamera();
      //       glutPostRedisplay();
             break;
             
         case 'd':
         case 'D':
-            glutIdleFunc(RightMoveCamera);
+            RightMoveCamera();
    //         glutPostRedisplay();
             break;
             
         case 'w':
         case 'W':
-            glutIdleFunc(FrontMoveCamera);
+            FrontMoveCamera();
     //        glutPostRedisplay();
             break;
             
         case 's':
         case 'S':
-            glutIdleFunc(BackMoveCamera);
+            BackMoveCamera();
      //       glutPostRedisplay();
+            break;
+            
+        /*手玉初期化*/
+        case 'x':
+        case 'X':
+            initStatus = 2;
+            break;
+            
+        /*全球初期化*/
+        case 'z':
+        case 'Z':
+            initStatus = true;
             break;
             
         case '_':
@@ -215,7 +226,6 @@ void mouse(int button, int state, int x, int y){
             if(state == GLUT_DOWN){
                 if(!mouseDown)  SetNum(x,y);    //マウス座標保存
                 mouseDown = true;
-                
                 break;
             }
             else{
@@ -228,7 +238,6 @@ void mouse(int button, int state, int x, int y){
         default:
             break;
     }
-    
 }
 
 void init(void)
@@ -249,9 +258,10 @@ int main(int argc, char *argv[]){
     glutInitWindowPosition(100,100);
     glutInitWindowSize(760,600);
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
+    glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
     glutCreateWindow(argv[0]);
     glutDisplayFunc(display);
+    
     glutReshapeFunc(resize);
     glutKeyboardFunc(keyboard);
     glutSpecialFunc(specialKey);

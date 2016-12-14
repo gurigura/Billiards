@@ -11,7 +11,7 @@ class BallColor{
         /*球色コード*/
         GLfloat  colorCode[10][4];
         /*テーブル色コード*/
-        GLfloat groundColor[4] = {0.0, 0.5, 0.0, 1.0};   //green[6]
+        GLfloat groundColor[4];   //green[6]
     
         BallColor();
 };

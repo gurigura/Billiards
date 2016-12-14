@@ -16,9 +16,11 @@ BallColor::BallColor(){
     };
     
     for(int i=0;i<BALL_NUM;i++){
-        for(int j=0;j<3;j++){
+        for(int j=0;j<4;j++){
             colorCode[i][j] = colorCodeInit[i][j];
         }
     }
+     GLfloat groundColorInit[4] = {0.0, 0.5, 0.0, 1.0};   //green2
+    for(int j=0;j<4;j++)groundColor[j] = groundColorInit[j];
     
 }
