@@ -13,7 +13,6 @@ void SetNum(float argOne,float argTwo){
 }
 
 void display(void){
-    
     static FpsMonitor fpsMonitor;   //FPS管理
     
     fpsMonitor.drawStart = glutGet(GLUT_ELAPSED_TIME);
@@ -76,10 +75,6 @@ void display(void){
         ball[0].speed.x = (float)((gameControl.mousePos[X] - argNum[0])/1000);
         ball[0].speed.z = (float)((gameControl.mousePos[Y] - argNum[1])/1000);
         
-        cout << ball[0].speed.x << endl;
-        cout << ball[0].speed.z << endl;
-
-        
         gameControl.mouseDown = false;
     }
     
@@ -125,7 +120,6 @@ void display(void){
     
     fpsMonitor.drawEnd = glutGet(GLUT_ELAPSED_TIME);
    //  printf("second per frame %f second \r",(fpsMonitor.drawEnd - fpsMonitor.drawStart)/1000.0);
-    
 }
 
 void resize(int w, int h){
@@ -150,25 +144,21 @@ void keyboard(unsigned char key,int x, int y){
         case 'a':
         case 'A':
             LeftMoveCamera();
-     //       glutPostRedisplay();
             break;
             
         case 'd':
         case 'D':
             RightMoveCamera();
-   //         glutPostRedisplay();
             break;
             
         case 'w':
         case 'W':
             FrontMoveCamera();
-    //        glutPostRedisplay();
             break;
             
         case 's':
         case 'S':
             BackMoveCamera();
-     //       glutPostRedisplay();
             break;
             
         /*手玉初期化*/
@@ -261,13 +251,10 @@ int main(int argc, char *argv[]){
     glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
     glutCreateWindow(argv[0]);
     glutDisplayFunc(display);
-    
     glutReshapeFunc(resize);
     glutKeyboardFunc(keyboard);
     glutSpecialFunc(specialKey);
-    
     glutMouseFunc(mouse);
-//    glutIdleFunc(Idle);
     init();
     
     glutMainLoop();

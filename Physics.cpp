@@ -51,7 +51,6 @@ void PhysicsCalculation::Refrect(Vector3d &argPos1, Vector3d &argPos2,  Vector3d
 
         argPos1.z += bunpZ*dis;
         argPos2.z -= bunpZ*dis;
-     
-        cout << "check" << endl;
+
     }
 }
