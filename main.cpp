@@ -39,7 +39,7 @@ void display(void){
     glRotated(45.0, 90.0, 0.0, 0.0);
 
     /*台の描画*/
-    draw.ground(-0.0, ballColor.groundColor);
+    draw.ground(-0.0);
     
     /*ポケットの描画*/
     for(int i=0;i<6;i++) pocket[i].MakePocket(0.5);
@@ -78,12 +78,13 @@ void display(void){
         gameControl.mouseDown = false;
     }
     
-    /*球移動処理*/
+    /*手球移動処理*/
     glPushMatrix();
-    if(debugNum == 1)ball[0].pos.z -= 0.01;
-    if(debugNum == 2)ball[0].pos.z += 0.01;
-    if(debugNum == 3)ball[0].pos.x -= 0.01;
-    if(debugNum == 4)ball[0].pos.x += 0.01;
+    if(debugNum == 1)ball[0].pos.z -= 0.03;
+    if(debugNum == 2)ball[0].pos.z += 0.03;
+    if(debugNum == 3)ball[0].pos.x -= 0.03;
+    if(debugNum == 4)ball[0].pos.x += 0.03;
+    debugNum = 0;
     glPopMatrix();
 
     for(int i=0;i<BALL_NUM;i++){
@@ -171,10 +172,6 @@ void keyboard(unsigned char key,int x, int y){
         case 'z':
         case 'Z':
             initStatus = true;
-            break;
-            
-        case '_':
-            debugNum = 0;
             break;
     
         /*終了処理*/

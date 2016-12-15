@@ -13,7 +13,7 @@ class DrawObject{
     DrawObject();
     
     /*テーブルの描画 引数:高さ,色*/
-    void ground(double height,GLfloat* color);
+    void ground(double height);
     
 };
 
